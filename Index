@@ -1,1 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquidación Detallada - Envía</title>
+    <style>
+        :root {
+            --envia-red: #e30613;
+            --wa-green: #25d366;
+            --dark: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border-top: 10px solid var(--envia-red);
+        }
+
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h2 { color: var(--envia-red); margin: 0; font-weight: 900; }
+        
+        .section-title {
+            font-size: 11px;
+            font-weight: 800;
+            color: #999;
+            text-transform: uppercase;
+            margin: 20px 0 10px;
+            display: block;
+            border-bottom: 1px dashed #ddd;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--envia-red); outline: none; }
+
+        /* Contenedor dinámico */
+        .unidad-item {
+            background: #fffafa;
+            border: 1px solid #ffecec;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .grid-medidas {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .grid-medidas label { font-size: 10px; color: #777; font-weight: bold; }
+
+        .btn-wa {
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 18px;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="header">
+        <h2>ENVÍA</h2>
+        <p style="font-size: 12px; color: #666;">LIQUIDACIÓN POR UNIDADES</p>
+    </div>
+
+    <div class="input-group">
+        <label style="font-weight: bold; font-size: 13px;">📍 CIUDAD DESTINO</label>
+        <input type="text" id="destino" list="ciudades" placeholder="Ej: Medellín">
+        <datalist id="ciudades">
+            <option value="Bogotá"><option value="Medellín"><option value="Cali"><option value="Barranquilla"><option value="Bucaramanga"><option value="Pereira"><option value="Cartagena"><option value="Manizales">
+        </datalist>
+    </div>
+
+    <div class="input-group" style="margin-top: 15px;">
+        <label style="font-weight: bold; font-size: 13px;">🔢 ¿CUÁNTAS UNIDADES ENVÍA?</label>
+        <input type="number" id="numUnidades" min="1" max="10" placeholder="Ej: 2" oninput="generarCampos()">
+    </div>
+
+    <div id="contenedorUnidades">
+        </div>
+
+    <span class="section-title">Información de Pago</span>
+    <div class="grid-medidas" style="grid-template-columns: 1fr 1fr;">
+        <input type="number" id="valorDec" placeholder="Valor Declarado $">
+        <select id="pago">
+            <option value="Contado">Contado</option>
+            <option value="Contra Entrega">Contra Entrega</option>
+            <option value="Crédito">Crédito</option>
+        </select>
+    </div>
+
+    <button class="btn-wa" onclick="enviarWA()">
+        ENVIAR DATOS DE LIQUIDACIÓN
+    </button>
+</div>
+
+<script>
+    function generarCampos() {
+        const cantidad = document.getElementById('numUnidades').value;
+        const contenedor = document.getElementById('contenedorUnidades');
+        contenedor.innerHTML = '';
+
+        if(cantidad > 10) { alert("Máximo 10 unidades por liquidación"); return; }
+
+        for(let i = 1; i <= cantidad; i++) {
+            const div = document.createElement('div');
+            div.className = 'unidad-item';
+            div.innerHTML = `
+                <div style="font-size: 12px; font-weight: bold; color: var(--envia-red)">UNIDAD #${i}</div>
+                <div class="grid-medidas">
+                    <div><label>PESO KG</label><input type="number" class="u-peso" placeholder="Kg"></div>
+                    <div><label>LARGO</label><input type="number" class="u-largo" placeholder="cm"></div>
+                    <div><label>ANCHO</label><input type="number" class="u-ancho" placeholder="cm"></div>
+                    <div><label>ALTO</label><input type="number" class="u-alto" placeholder="cm"></div>
+                </div>
+            `;
+            contenedor.appendChild(div);
+        }
+    }
+
+    function enviarWA() {
+        const destino = document.getElementById('destino').value;
+        const numU = document.getElementById('numUnidades').value;
+        const vDec = document.getElementById('valorDec').value;
+        const pago = document.getElementById('pago').value;
+
+        if(!destino || !numU) return alert("Completa destino y cantidad.");
+
+        let detalleUnidades = "";
+        const pesos = document.querySelectorAll('.u-peso');
+        const largos = document.querySelectorAll('.u-largo');
+        const anchos = document.querySelectorAll('.u-ancho');
+        const altos = document.querySelectorAll('.u-alto');
+
+        pesos.forEach((p, index) => {
+            detalleUnidades += `📦 *Unidad ${index + 1}:* ${p.value}Kg - (${largos[index].value}x${anchos[index].value}x${altos[index].value}cm)%0A`;
+        });
+
+        const msg = 
+            `*📋 SOLICITUD DE LIQUIDACIÓN*%0A` +
+            `*Envía Colvanes*%0A%0A` +
+            `*📍 DESTINO:* ${destino}%0A` +
+            `*🔢 TOTAL UNIDADES:* ${numU}%0A%0A` +
+            `*DETALLE TÉCNICO:*%0A${detalleUnidades}%0A` +
+            `*🛡️ VALOR DECLARADO:* $${parseFloat(vDec).toLocaleString('es-CO')}%0A` +
+            `*💳 FORMA DE PAGO:* ${pago}%0A%0A` +
+            `*━━━━━━━━━━━━━━━━━━*%0A` +
+            `Favor liquidar para confirmar el servicio.`;
+
+        window.open(`https://wa.me/?text=${msg}`, '_blank');
+    }
+</script>
+
+</body>
+</html>
 
