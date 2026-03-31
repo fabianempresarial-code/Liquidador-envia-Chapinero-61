@@ -3,187 +3,230 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liquidación Detallada - Envía</title>
+    <title>Liquidación Envía Colvanes - Colombia</title>
     <style>
         :root {
             --envia-red: #e30613;
             --wa-green: #25d366;
-            --dark: #212529;
+            --dark: #1a1a1a;
+            --light-bg: #f0f2f5;
         }
 
         body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f4f7f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--light-bg);
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
             justify-content: center;
         }
 
-        .card {
+        .container {
             background: white;
-            padding: 30px;
-            border-radius: 25px;
+            padding: 25px;
+            border-radius: 20px;
             width: 100%;
-            max-width: 500px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            border-top: 10px solid var(--envia-red);
+            max-width: 480px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-top: 8px solid var(--envia-red);
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        .header { text-align: center; margin-bottom: 25px; }
-        .header h2 { color: var(--envia-red); margin: 0; font-weight: 900; }
-        
-        .section-title {
-            font-size: 11px;
-            font-weight: 800;
-            color: #999;
-            text-transform: uppercase;
-            margin: 20px 0 10px;
-            display: block;
-            border-bottom: 1px dashed #ddd;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h2 { color: var(--envia-red); margin: 0; font-size: 26px; font-weight: 900; }
+        .header p { font-size: 12px; color: #666; margin-top: 5px; font-weight: bold; }
+
+        .label-main { display: block; font-size: 13px; font-weight: 800; color: #444; margin: 15px 0 5px; text-transform: uppercase; }
 
         input, select {
             width: 100%;
             padding: 12px;
-            border: 2px solid #eee;
+            border: 2px solid #edf0f2;
             border-radius: 12px;
             font-size: 15px;
             box-sizing: border-box;
             transition: 0.3s;
         }
 
-        input:focus { border-color: var(--envia-red); outline: none; }
+        input:focus { border-color: var(--envia-red); outline: none; background: #fffafa; }
 
-        /* Contenedor dinámico */
-        .unidad-item {
-            background: #fffafa;
-            border: 1px solid #ffecec;
+        /* Estilo para las unidades dinámicas */
+        .box-unit {
+            background: #fdfdfd;
+            border: 1px solid #eee;
             padding: 15px;
             border-radius: 15px;
-            margin-bottom: 10px;
-            animation: fadeIn 0.3s ease;
+            margin-top: 10px;
+            border-left: 4px solid var(--envia-red);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .unit-title { font-size: 11px; font-weight: 900; color: var(--envia-red); margin-bottom: 8px; }
 
-        .grid-medidas {
+        .grid-specs {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
             gap: 8px;
-            margin-top: 8px;
         }
 
-        .grid-medidas label { font-size: 10px; color: #777; font-weight: bold; }
+        .grid-specs label { font-size: 9px; color: #999; font-weight: bold; display: block; margin-bottom: 2px; }
 
-        .btn-wa {
-            background: linear-gradient(45deg, #25d366, #128c7e);
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25d366, #128c7e);
             color: white;
             border: none;
             width: 100%;
             padding: 18px;
             border-radius: 15px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2);
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 8px 15px rgba(37, 211, 102, 0.2);
         }
+
+        .btn-whatsapp:active { transform: scale(0.98); }
     </style>
 </head>
 <body>
 
-<div class="card">
+<div class="container">
     <div class="header">
         <h2>ENVÍA</h2>
-        <p style="font-size: 12px; color: #666;">LIQUIDACIÓN POR UNIDADES</p>
+        <p>RECOLECCIÓN Y LIQUIDACIÓN NACIONAL</p>
     </div>
 
-    <div class="input-group">
-        <label style="font-weight: bold; font-size: 13px;">📍 CIUDAD DESTINO</label>
-        <input type="text" id="destino" list="ciudades" placeholder="Ej: Medellín">
-        <datalist id="ciudades">
-            <option value="Bogotá"><option value="Medellín"><option value="Cali"><option value="Barranquilla"><option value="Bucaramanga"><option value="Pereira"><option value="Cartagena"><option value="Manizales">
+    <label class="label-main">📍 Ciudad Destino</label>
+    <input type="text" id="destino" list="colombia" placeholder="Escribe para buscar ciudad...">
+    <datalist id="colombia">
+        <option value="Bogotá D.C.">
+        <option value="Medellín (Antioquia)">
+        <option value="Cali (Valle del Cauca)">
+        <option value="Barranquilla (Atlántico)">
+        <option value="Cartagena (Bolívar)">
+        <option value="Bucaramanga (Santander)">
+        <option value="Pereira (Risaralda)">
+        <option value="Ibagué (Tolima)">
+        <option value="Santa Marta (Magdalena)">
+        <option value="Cúcuta (N. Santander)">
+        <option value="Villavicencio (Meta)">
+        <option value="Manizales (Caldas)">
+        <option value="Neiva (Huila)">
+        <option value="Pasto (Nariño)">
+        <option value="Armenia (Quindío)">
+        <option value="Valledupar (Cesar)">
+        <option value="Montería (Córdoba)">
+        <option value="Sincelejo (Sucre)">
+        <option value="Popayán (Cauca)">
+        <option value="Riohacha (La Guajira)">
+        <option value="Tunja (Boyacá)">
+        <option value="Quibdó (Chocó)">
+        <option value="Yopal (Casanare)">
+        <option value="Florencia (Caquetá)">
+        <option value="Buenaventura (Valle)">
+        <option value="Apartadó (Antioquia)">
+        <option value="Tuluá (Valle)">
+        <option value="Ipiales (Nariño)">
+        <option value="Barrancabermeja (Santander)">
+        <option value="Girardot (Cundinamarca)">
+        <option value="Chía (Cundinamarca)">
+        <option value="Envigado (Antioquia)">
+        <option value="Itagüí (Antioquia)">
+        <option value="Bello (Antioquia)">
+        <option value="Soledad (Atlántico)">
+        <option value="Palmira (Valle)">
         </datalist>
-    </div>
 
-    <div class="input-group" style="margin-top: 15px;">
-        <label style="font-weight: bold; font-size: 13px;">🔢 ¿CUÁNTAS UNIDADES ENVÍA?</label>
-        <input type="number" id="numUnidades" min="1" max="10" placeholder="Ej: 2" oninput="generarCampos()">
-    </div>
+    <label class="label-main">🔢 Cantidad de Unidades</label>
+    <input type="number" id="cantidad" min="1" max="15" placeholder="Ej: 3" oninput="crearCajas()">
 
-    <div id="contenedorUnidades">
+    <div id="listaUnidades">
         </div>
 
-    <span class="section-title">Información de Pago</span>
-    <div class="grid-medidas" style="grid-template-columns: 1fr 1fr;">
-        <input type="number" id="valorDec" placeholder="Valor Declarado $">
-        <select id="pago">
-            <option value="Contado">Contado</option>
-            <option value="Contra Entrega">Contra Entrega</option>
-            <option value="Crédito">Crédito</option>
-        </select>
-    </div>
+    <label class="label-main">💰 Valor Declarado ($)</label>
+    <input type="number" id="valor" placeholder="Ej: 500000">
 
-    <button class="btn-wa" onclick="enviarWA()">
-        ENVIAR DATOS DE LIQUIDACIÓN
+    <label class="label-main">💳 Tipo de Envío</label>
+    <select id="pago">
+        <option value="Contado">Contado (Remitente)</option>
+        <option value="Contra Entrega">Contra Entrega (Destinatario)</option>
+        <option value="Crédito">Crédito (Empresarial)</option>
+    </select>
+
+    <button class="btn-whatsapp" onclick="enviar()">
+        SOLICITAR LIQUIDACIÓN ➔
     </button>
 </div>
 
 <script>
-    function generarCampos() {
-        const cantidad = document.getElementById('numUnidades').value;
-        const contenedor = document.getElementById('contenedorUnidades');
-        contenedor.innerHTML = '';
+    // Lista extendida de municipios (puedes añadir más si lo deseas)
+    const municipiosExtra = ["Abejorral", "Abriaquí", "Acacías", "Acandí", "Acevedo", "Achí", "Agrado", "Agua de Dios", "Aguachica", "Aguada", "Aguadas", "Aguazul", "Agustín Codazzi", "Aipe", "Albán", "Albania", "Alcalá", "Aldana", "Alejandría", "Algeciras", "Almaguer", "Almeida", "Alpujarra", "Altamira", "Alto Baudó", "Altos del Rosario", "Alvarado", "Amagá", "Amalfi", "Ambalema", "Anapoima", "Ancuya", "Andalucía", "Andes", "Angelópolis", "Angostura", "Anolaima", "Anorí", "Anserma", "Ansermanuevo", "Anza", "Anzoátegui", "Apía", "Apulo", "Aquitania", "Aracataca", "Aranzazu", "Aratoca", "Arauca", "Arauquita", "Arbeláez", "Arboleda", "Arboletes", "Arcabuco", "Arenal", "Argelia", "Ariguaní", "Arjona", "Arboledas", "Arroyohondo", "Astrea", "Ataco", "Ayapel", "Bagadó", "Bahía Solano", "Bajo Baudó", "Balboa", "Baranoa", "Baraya", "Barbacoas", "Barbosa", "Barichara", "Barranco de Loba", "Becerril", "Belalcázar", "Belén", "Belmira", "Beltrán", "Berbeo", "Betania", "Betéitiva", "Betulia", "Bituima", "Boavita", "Bochalema", "Bogotá", "Bojacá", "Bojayá", "Bolívar", "Bosconia", "Boyacá", "Briceño", "Buena Vista", "Buesaco", "Bugalagrande", "Buriticá", "Busbanzá", "Cabrera", "Cabuyaro", "Cáceres", "Cachipay", "Caicedo", "Caicedonia", "Caimito", "Cajamarca", "Cajibío", "Cajicá", "Calamar", "Calarcá", "Caldas", "Caldono", "Calima", "Caloto", "Campamento", "Campo de la Cruz", "Campoalegre", "Campohermoso", "Canalete", "Cañasgordas", "Candelaria", "Cantagallo", "Capitanejo", "Cáqueza", "Caracolí", "Caramanta", "Carcasí", "Cardonal", "Carepa", "Carmen de Apicalá", "Carmen de Carupa", "Carmen de Viboral", "Cartago", "Carurú", "Casabianca", "Castilla la Nueva", "Caucasia", "Cepitá", "Cereté", "Cerinza", "Cerrito", "Cerro San Antonio", "Chachagüí", "Chaguaní", "Chalán", "Chámeza", "Chaparral", "Charalá", "Charta", "Chigorodó", "Chima", "Chimichagua", "Chinácota", "Chinú", "Chipaque", "Chipatá", "Chiquinquirá", "Chiriguaná", "Chiscas", "Chita", "Chitaraque", "Chivatá", "Chivolo", "Choachí", "Chocontá", "Cicuco", "Ciénaga", "Ciénaga de Oro", "Cimitarra", "Circasia", "Cisneros", "Cumaral", "Cumaribo", "Curití", "Dabeiba", "Dagua", "Dibulla", "Distracción", "Dolores", "Donmatías", "Dosquebradas", "Duitama", "Durania", "Ebéjico", "El Bagre", "El Banco", "El Cairo", "El Calvario", "El Carmen", "El Castillo", "El Cerrito", "El Colegio", "El Copey", "El Difícil", "El Doncello", "El Dorado", "El Espinal", "El Hatico", "El Molino", "El Paso", "El Peñol", "El Retén", "El Retorno", "El Rosal", "El Santuario", "El Tarra", "El Zulia", "Elías", "Encino", "Enciso", "Entrerríos", "Espinal", "Facatativá", "Falán", "Filadelfia", "Filandia", "Firavitoba", "Flandes", "Florencia", "Fómeque", "Fonseca", "Fortul", "Fosca", "Funza", "Fúquene", "Fusagasugá", "Gachalá", "Gachancipá", "Gachetá", "Galán", "Galapa", "Galeras", "Gama", "Gamarra", "Génova", "Gigante", "Ginebra", "Giraldo", "Girardota", "Giron", "Gómez Plata", "Granada", "Guaca", "Guacarí", "Guaduas", "Guamal", "Guamo", "Guapi", "Guarne", "Guasca", "Guatapé", "Guatavita", "Guateque", "Guavatá", "Guayabal", "Guayabetal", "Hatonuevo", "Hato", "Honda", "Inírida", "Inzá", "Ipiales", "Isnos", "Istmina", "Jambaló", "Jamundí", "Jardín", "Jericó", "Jerusalén", "La Ceja", "La Dorada", "La Esperanza", "La Estrella", "La Florida", "La Gloria", "La Jagua", "La Merced", "La Mesa", "La Montañita", "La Palma", "La Paz", "La Pintada", "La Plata", "La Rocha", "La Tebaida", "La Unión", "La Vega", "La Victoria", "La Virginia", "Líbano", "Lloró", "López", "Lourdes", "Luruaco", "Macanal", "Maceo", "Madrid", "Magangué", "Magüí", "Maicao", "Majagual", "Málaga", "Malambo", "Manaure", "Mani", "Mapiripán", "Margarita", "Marinilla", "Maripí", "Mariquita", "Marmato", "Marquetalia", "Marsella", "Matanza", "Melgar", "Mercedes", "Mesetas", "Mitú", "Mocoa", "Mogotes", "Momil", "Mompós", "Mongua", "Monguí", "Moniquirá", "Montelíbano", "Montenegro", "Mora", "Morelia", "Morroa", "Mosquera", "Murillo", "Murindó", "Mutatá", "Mutiscua", "Muzo", "Nariño", "Nátaga", "Naval", "Nemocón", "Nilo", "Nunchía", "Ocaña", "Oiba", "Oicatá", "Olaya", "Onzaga", "Orito", "Ortega", "Ospina", "Otanche", "Ovejas", "Pacho", "Paipa", "Pailitas", "Paime", "Pauna", "Paya", "Paz de Ariporo", "Paz de Río", "Peñol", "Pensilvania", "Piamonte", "Piedecuesta", "Pijao", "Pitalito", "Pivijay", "Planadas", "Planeta Rica", "Plato", "Prado", "Pradera", "Pueblo Bello", "Pueblo Nuevo", "Pueblo Rico", "Puente Nacional", "Puerto Asís", "Puerto Berrío", "Puerto Boyacá", "Puerto Carreño", "Puerto Colombia", "Puerto Cortés", "Puerto Gaitán", "Puerto Guzmán", "Puerto Leguízamo", "Puerto Libertador", "Puerto Lleras", "Puerto López", "Puerto Nare", "Puerto Parra", "Puerto Rico", "Puerto Salgar", "Puerto Tejada", "Puerto Triunfo", "Puerto Wilches", "Puli", "Pupiales", "Puracé", "Purificación", "Purísima", "Quebradanegra", "Quetame", "Quinchía", "Quípama", "Ramiriquí", "Ráquira", "Remedios", "Remolino", "Repelón", "Restrepo", "Retiro", "Ricaurte", "Riosucio", "Rionegro", "Rovira", "Sabanalarga", "Sabaneta", "Sabanagrande", "Sahagún", "Saladoblanco", "Salamina", "Salento", "Salgar", "Samacá", "Samaná", "Sampués", "San Alberto", "San Andrés", "San Antero", "San Benito", "San Bernardo", "San Carlos", "San Cristóbal", "San Diego", "San Gil", "San Jacinto", "San Jerónimo", "San José del Guaviare", "San Juan", "San Lorenzo", "San Marcos", "San Martín", "San Onofre", "San Pedro", "San Roque", "San Vicente", "Sandona", "Santa Bárbara", "Santa Fe de Antioquia", "Santa Rosa de Cabal", "Santa Rosa de Osos", "Santa Sofía", "Santander de Quilichao", "Santiago", "Santo Domingo", "Santuario", "Saravena", "Segovia", "Sevilla", "Siachoque", "Sibaté", "Sibundoy", "Silvania", "Silvia", "Simijaca", "Sincelejo", "Sitionuevo", "Soacha", "Soatá", "Socorro", "Sogamoso", "Sonsón", "Sopetrán", "Sopó", "Sora", "Soracá", "Sotaquirá", "Sotara", "Suaita", "Suan", "Suárez", "Suaza", "Subachoque", "Sucre", "Susa", "Susacón", "Sutamarchán", "Sutatausa", "Sutatenza", "Tabio", "Tadó", "Talaigua", "Tamalameque", "Támara", "Tame", "Támesis", "Taminango", "Tangua", "Tarazá", "Tarqui", "Tarso", "Tauramena", "Tena", "Tenerife", "Tenjo", "Tenza", "Teorama", "Teruel", "Tesalia", "Tibacuy", "Tibaná", "Tibasosa", "Tibirita", "Timbío", "Timbiquí", "Tinjacá", "Tipacoque", "Tiquisio", "Titiribí", "Toca", "Tocaima", "Tocancipá", "Toguí", "Toledo", "Tolú", "Toluviejo", "Tona", "Tópaga", "Topaipí", "Toribío", "Toro", "Tota", "Totoró", "Trinidad", "Trujillo", "Tubará", "Tuchín", "Tuluá", "Tumaco", "Tunja", "Tununguá", "Turbaná", "Turbaco", "Turbia", "Tuta", "Tutazá", "Ubalá", "Ubaque", "Ubaté", "Ulloa", "Une", "Unguía", "Uramita", "Uribe", "Uribia", "Urrao", "Urumita", "Usiacurí", "Útica", "Vajira", "Valdivia", "Valencia", "Valparaiso", "Vegachí", "Vélez", "Venadillo", "Venecia", "Vetas", "Vianí", "Vichada", "Victoria", "Vigía del Fuerte", "Vijes", "Villa de Leyva", "Villa del Rosario", "Villa Gamuez", "Villa Garzón", "Villa Hermosa", "Villagarzón", "Villamaría", "Villanueva", "Villeta", "Viotá", "Viracachá", "Vistahermosa", "Viterbo", "Yacopí", "Yacuanquer", "Yaguará", "Yali", "Yarumal", "Yolombó", "Yondó", "Yotoco", "Yumbo", "Zambrano", "Zapatoca", "Zarzal", "Zetaquira", "Zipacón", "Zipaquirá"];
 
-        if(cantidad > 10) { alert("Máximo 10 unidades por liquidación"); return; }
+    const dl = document.getElementById('colombia');
+    municipiosExtra.forEach(m => {
+        const op = document.createElement('option');
+        op.value = m;
+        dl.appendChild(op);
+    });
 
-        for(let i = 1; i <= cantidad; i++) {
-            const div = document.createElement('div');
-            div.className = 'unidad-item';
-            div.innerHTML = `
-                <div style="font-size: 12px; font-weight: bold; color: var(--envia-red)">UNIDAD #${i}</div>
-                <div class="grid-medidas">
-                    <div><label>PESO KG</label><input type="number" class="u-peso" placeholder="Kg"></div>
-                    <div><label>LARGO</label><input type="number" class="u-largo" placeholder="cm"></div>
-                    <div><label>ANCHO</label><input type="number" class="u-ancho" placeholder="cm"></div>
-                    <div><label>ALTO</label><input type="number" class="u-alto" placeholder="cm"></div>
+    function crearCajas() {
+        const n = document.getElementById('cantidad').value;
+        const lista = document.getElementById('listaUnidades');
+        lista.innerHTML = '';
+        
+        if (n > 15) return alert("Máximo 15 unidades");
+
+        for (let i = 1; i <= n; i++) {
+            const item = document.createElement('div');
+            item.className = 'box-unit';
+            item.innerHTML = `
+                <div class="unit-title">PAQUETE / UNIDAD #${i}</div>
+                <div class="grid-specs">
+                    <div><label>PESO (KG)</label><input type="number" class="u-p" placeholder="0"></div>
+                    <div><label>LARGO (cm)</label><input type="number" class="u-l" placeholder="0"></div>
+                    <div><label>ANCHO (cm)</label><input type="number" class="u-a" placeholder="0"></div>
+                    <div><label>ALTO (cm)</label><input type="number" class="u-h" placeholder="0"></div>
                 </div>
             `;
-            contenedor.appendChild(div);
+            lista.appendChild(item);
         }
     }
 
-    function enviarWA() {
-        const destino = document.getElementById('destino').value;
-        const numU = document.getElementById('numUnidades').value;
-        const vDec = document.getElementById('valorDec').value;
+    function enviar() {
+        const dest = document.getElementById('destino').value;
+        const cant = document.getElementById('cantidad').value;
+        const val = document.getElementById('valor').value;
         const pago = document.getElementById('pago').value;
 
-        if(!destino || !numU) return alert("Completa destino y cantidad.");
+        if (!dest || !cant) return alert("Falta destino o cantidad");
 
-        let detalleUnidades = "";
-        const pesos = document.querySelectorAll('.u-peso');
-        const largos = document.querySelectorAll('.u-largo');
-        const anchos = document.querySelectorAll('.u-ancho');
-        const altos = document.querySelectorAll('.u-alto');
+        let specs = "";
+        const ps = document.querySelectorAll('.u-p');
+        const ls = document.querySelectorAll('.u-l');
+        const as = document.querySelectorAll('.u-a');
+        const hs = document.querySelectorAll('.u-h');
 
-        pesos.forEach((p, index) => {
-            detalleUnidades += `📦 *Unidad ${index + 1}:* ${p.value}Kg - (${largos[index].value}x${anchos[index].value}x${altos[index].value}cm)%0A`;
+        ps.forEach((p, index) => {
+            specs += `📦 *Unidad ${index + 1}:* ${p.value}Kg (${ls[index].value}x${as[index].value}x${hs[index].value}cm)%0A`;
         });
 
-        const msg = 
+        const msn = 
             `*📋 SOLICITUD DE LIQUIDACIÓN*%0A` +
             `*Envía Colvanes*%0A%0A` +
-            `*📍 DESTINO:* ${destino}%0A` +
-            `*🔢 TOTAL UNIDADES:* ${numU}%0A%0A` +
-            `*DETALLE TÉCNICO:*%0A${detalleUnidades}%0A` +
-            `*🛡️ VALOR DECLARADO:* $${parseFloat(vDec).toLocaleString('es-CO')}%0A` +
+            `*📍 DESTINO:* ${dest}%0A` +
+            `*🔢 TOTAL UNIDADES:* ${cant}%0A%0A` +
+            `*DETALLE DE CARGA:*%0A${specs}%0A` +
+            `*🛡️ VALOR DECLARADO:* $${parseFloat(val).toLocaleString('es-CO')}%0A` +
             `*💳 FORMA DE PAGO:* ${pago}%0A%0A` +
             `*━━━━━━━━━━━━━━━━━━*%0A` +
-            `Favor liquidar para confirmar el servicio.`;
+            `Favor liquidar para proceder con el despacho.`;
 
-        window.open(`https://wa.me/?text=${msg}`, '_blank');
+        window.open(`https://wa.me/?text=${msn}`, '_blank');
     }
 </script>
 
